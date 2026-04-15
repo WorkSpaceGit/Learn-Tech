@@ -22,7 +22,6 @@
     <!-- Phosphor Icons -->
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <style>
-        /* Анімації для плавного переходу */
         .fade-in { animation: fadeIn 0.4s ease-in-out; }
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
@@ -43,7 +42,6 @@
                     <span>ТехноСвіт Тести</span>
                 </div>
                 
-                <!-- Десктопне меню -->
                 <div class="hidden md:flex space-x-1">
                     <button onclick="startTest(5)" class="px-4 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition font-medium">5 Клас</button>
                     <button onclick="startTest(6)" class="px-4 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition font-medium">6 Клас</button>
@@ -53,13 +51,11 @@
                 </div>
 
                 <div class="flex items-center gap-4">
-                    <!-- Перемикач теми -->
                     <button onclick="toggleTheme()" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition" title="Змінити тему">
                         <i class="ph ph-sun text-2xl hidden dark:block text-yellow-400"></i>
                         <i class="ph ph-moon text-2xl block dark:hidden text-gray-600"></i>
                     </button>
                     
-                    <!-- Бургер меню для мобільних -->
                     <button onclick="toggleMobileMenu()" class="md:hidden p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition">
                         <i class="ph ph-list text-2xl"></i>
                     </button>
@@ -67,7 +63,6 @@
             </div>
         </div>
         
-        <!-- Мобільне випадаюче меню -->
         <div id="mobileMenu" class="hidden md:hidden bg-white dark:bg-darkCard border-t dark:border-gray-700 shadow-lg absolute w-full">
             <div class="flex flex-col p-4 space-y-2">
                 <button onclick="startTest(5); toggleMobileMenu()" class="text-left px-4 py-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 font-medium">5 Клас</button>
@@ -79,14 +74,13 @@
         </div>
     </nav>
 
-    <!-- Основний контент -->
     <main class="flex-grow flex items-center justify-center p-4">
         
         <!-- Екран привітання -->
         <div id="welcomeScreen" class="max-w-2xl w-full bg-white dark:bg-darkCard rounded-2xl shadow-xl p-8 text-center fade-in">
             <i class="ph ph-student text-6xl text-indigo-500 mb-4"></i>
             <h1 class="text-3xl font-bold mb-4">Підсумкове оцінювання з Технологій</h1>
-            <p class="text-gray-600 dark:text-gray-400 mb-8 text-lg">Обери свій клас у меню вище, щоб розпочати тестування. Тест складається з 12 питань. Бажаю успіхів!</p>
+            <p class="text-gray-600 dark:text-gray-400 mb-8 text-lg">Обери свій клас у меню вище, щоб розпочати тестування. Тест складається з 12 питань.</p>
             <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 md:hidden">
                 <button onclick="startTest(5)" class="bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 py-3 rounded-xl font-bold hover:bg-indigo-200 dark:hover:bg-indigo-800/50 transition">5 Клас</button>
                 <button onclick="startTest(6)" class="bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 py-3 rounded-xl font-bold hover:bg-indigo-200 dark:hover:bg-indigo-800/50 transition">6 Клас</button>
@@ -98,7 +92,6 @@
 
         <!-- Контейнер тесту -->
         <div id="quizScreen" class="max-w-3xl w-full hidden">
-            <!-- Індикатор прогресу -->
             <div class="mb-6 flex justify-between items-end">
                 <div>
                     <span id="gradeBadge" class="bg-indigo-500 text-white text-sm font-bold px-3 py-1 rounded-full mb-2 inline-block"></span>
@@ -109,16 +102,9 @@
                 </div>
             </div>
 
-            <!-- Зона питання -->
             <div class="bg-white dark:bg-darkCard rounded-2xl shadow-xl p-6 sm:p-8 fade-in">
                 <p id="questionText" class="text-xl sm:text-2xl font-semibold mb-6"></p>
-                
-                <!-- Варіанти відповідей -->
-                <div id="optionsContainer" class="space-y-3">
-                    <!-- Кнопки генеруватимуться через JS -->
-                </div>
-
-                <!-- Зворотній зв'язок (пояснення) -->
+                <div id="optionsContainer" class="space-y-3"></div>
                 <div id="feedbackContainer" class="mt-6 hidden p-4 rounded-xl border">
                     <div class="flex items-start gap-3">
                         <i id="feedbackIcon" class="text-2xl mt-1"></i>
@@ -128,22 +114,33 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- Кнопка Далі -->
                 <div class="mt-8 flex justify-end">
                     <button id="nextBtn" onclick="nextQuestion()" class="hidden bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-8 rounded-xl transition shadow-lg flex items-center gap-2">
-                        Наступне питання <i class="ph ph-arrow-right font-bold"></i>
+                        Наступне питання <i class="ph ph-arrow-right"></i>
                     </button>
                 </div>
             </div>
         </div>
 
         <!-- Екран результатів -->
-        <div id="resultScreen" class="max-w-2xl w-full hidden bg-white dark:bg-darkCard rounded-2xl shadow-xl p-8 text-center fade-in">
+        <div id="resultScreen" class="max-w-2xl w-full hidden bg-white dark:bg-darkCard rounded-2xl shadow-xl p-8 text-center fade-in border-t-8 border-indigo-600">
             <div id="resultIcon" class="mb-4"></div>
-            <h2 class="text-4xl font-bold mb-2 text-indigo-600 dark:text-indigo-400">Тестування завершено!</h2>
-            <p class="text-2xl mt-4 mb-8">Твій бал: <span id="finalScore" class="font-bold text-5xl mx-2"></span> з 12</p>
-            <p id="resultMessage" class="text-lg text-gray-600 dark:text-gray-400 mb-8 font-medium"></p>
+            <h2 class="text-3xl font-bold mb-2">Тестування завершено!</h2>
+            
+            <!-- Додано інформацію про клас та бал -->
+            <div class="bg-gray-50 dark:bg-gray-800/50 rounded-2xl p-6 my-6 border border-gray-100 dark:border-gray-700">
+                <p class="text-gray-500 dark:text-gray-400 uppercase tracking-widest text-sm font-bold mb-2">Ваш результат за</p>
+                <div class="text-2xl font-black text-indigo-600 dark:text-indigo-400 mb-4">
+                    <span id="finalGradeText"></span> КЛАС
+                </div>
+                <div class="flex items-center justify-center gap-2">
+                    <span class="text-gray-400 text-lg uppercase font-bold">Бал:</span>
+                    <span id="finalScore" class="font-black text-6xl text-gray-900 dark:text-white"></span>
+                    <span class="text-gray-400 text-3xl font-light">/ 12</span>
+                </div>
+            </div>
+
+            <p id="resultMessage" class="text-lg text-gray-600 dark:text-gray-400 mb-8 font-medium italic"></p>
             
             <div class="flex flex-col sm:flex-row justify-center gap-4">
                 <button onclick="startTest(currentGrade)" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-8 rounded-xl transition shadow-lg">
@@ -157,12 +154,10 @@
 
     </main>
 
-    <!-- Футер -->
     <footer class="text-center py-4 text-sm text-gray-500 dark:text-gray-500 border-t border-gray-200 dark:border-gray-800 mt-auto">
         &copy; 2026 | Розроблено для уроків Технологій
     </footer>
 
-    <!-- Логіка JavaScript -->
     <script>
         // База даних питань (по 12 для кожного класу)
         const db = {
@@ -538,14 +533,12 @@
             ]
         };
 
-        // Стан додатку
         let currentGrade = null;
         let currentQuestions = [];
         let currentQIndex = 0;
         let score = 0;
         let isAnswered = false;
 
-        // Ініціалізація теми
         function initTheme() {
             if (localStorage.theme === 'light') {
                 document.documentElement.classList.remove('dark');
@@ -561,8 +554,7 @@
         }
 
         function toggleMobileMenu() {
-            const menu = document.getElementById('mobileMenu');
-            menu.classList.toggle('hidden');
+            document.getElementById('mobileMenu').classList.toggle('hidden');
         }
 
         function showWelcomeScreen() {
@@ -571,7 +563,6 @@
             document.getElementById('resultScreen').classList.add('hidden');
         }
 
-        // Утиліта для перемішування масиву (Алгоритм Фішера-Єтса)
         function shuffleArray(array) {
             const arr = [...array];
             for (let i = arr.length - 1; i > 0; i--) {
@@ -585,8 +576,6 @@
             currentGrade = grade;
             score = 0;
             currentQIndex = 0;
-            
-            // Копіюємо і перемішуємо питання для вибраного класу
             currentQuestions = shuffleArray(db[grade]);
 
             document.getElementById('gradeBadge').innerText = grade + ' Клас';
@@ -605,13 +594,11 @@
             document.getElementById('currentScore').innerText = score;
             document.getElementById('questionText').innerText = q.q;
             
-            // Приховуємо кнопку "Далі" та зворотній зв'язок
             document.getElementById('nextBtn').classList.add('hidden');
             const feedbackContainer = document.getElementById('feedbackContainer');
             feedbackContainer.classList.add('hidden');
-            feedbackContainer.className = 'mt-6 hidden p-4 rounded-xl border'; // reset classes
+            feedbackContainer.className = 'mt-6 hidden p-4 rounded-xl border';
 
-            // Формуємо масив варіантів та перемішуємо його
             let options = [
                 { text: q.a, isCorrect: q.a === q.correct },
                 { text: q.b, isCorrect: q.b === q.correct },
@@ -627,9 +614,7 @@
 
             options.forEach((opt, index) => {
                 const btn = document.createElement('button');
-                btn.className = 'w-full text-left p-4 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-indigo-50 dark:hover:bg-indigo-900/30 font-medium option-btn flex gap-3 items-center group bg-white dark:bg-darkCard';
-                
-                // Візуальна структура кнопки: Літера + Текст
+                btn.className = 'w-full text-left p-4 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-indigo-50 dark:hover:bg-indigo-900/30 font-medium option-btn flex gap-3 items-center group bg-white dark:bg-darkCard transition-all';
                 btn.innerHTML = `
                     <span class="flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-lg bg-gray-100 dark:bg-gray-800 text-indigo-600 dark:text-indigo-400 font-bold group-hover:bg-indigo-200 dark:group-hover:bg-indigo-800 transition">
                         ${letters[index]}
@@ -637,27 +622,22 @@
                     <span class="flex-grow">${opt.text}</span>
                     <i class="ph ph-check-circle text-2xl text-green-500 opacity-0 transition status-icon"></i>
                 `;
-                
-                btn.onclick = () => handleAnswer(btn, opt.isCorrect, q.explanation, options, q.correct);
+                btn.onclick = () => handleAnswer(btn, opt.isCorrect, q.explanation, q.correct);
                 optionsContainer.appendChild(btn);
             });
         }
 
-        function handleAnswer(selectedBtn, isCorrect, explanation, optionsList, correctText) {
+        function handleAnswer(selectedBtn, isCorrect, explanation, correctText) {
             if (isAnswered) return;
             isAnswered = true;
 
             const allBtns = document.getElementById('optionsContainer').children;
             
-            // Відключаємо всі кнопки
             for (let btn of allBtns) {
                 btn.disabled = true;
                 btn.classList.remove('hover:bg-indigo-50', 'dark:hover:bg-indigo-900/30', 'cursor-pointer');
-                
-                // Знаходимо правильну кнопку і підсвічуємо її зеленою рамкою
                 if (btn.innerText.includes(correctText)) {
                     btn.classList.add('border-green-500', 'dark:border-green-500', 'bg-green-50', 'dark:bg-green-900/20');
-                    btn.querySelector('.status-icon').classList.remove('opacity-0');
                     btn.querySelector('.status-icon').className = 'ph ph-check-circle text-2xl text-green-500 transition status-icon';
                 }
             }
@@ -670,32 +650,20 @@
             if (isCorrect) {
                 score++;
                 document.getElementById('currentScore').innerText = score;
-                selectedBtn.classList.add('border-green-500'); // Додатковий акцент на вибраній
-                
-                // Дизайн зворотного зв'язку - успіх
                 feedbackContainer.classList.remove('hidden');
                 feedbackContainer.classList.add('bg-green-100', 'border-green-300', 'dark:bg-green-900/40', 'dark:border-green-800', 'fade-in');
                 feedbackIcon.className = 'ph-fill ph-check-circle text-2xl mt-1 text-green-600 dark:text-green-400';
-                feedbackTitle.className = 'font-bold text-lg text-green-800 dark:text-green-300';
-                feedbackTitle.innerText = "Абсолютно правильно! Молодець!";
+                feedbackTitle.innerText = "Правильно!";
                 feedbackText.innerText = explanation;
-                
             } else {
-                // Підсвічуємо помилкову червоним
                 selectedBtn.classList.add('border-red-500', 'dark:border-red-500', 'bg-red-50', 'dark:bg-red-900/20');
-                selectedBtn.querySelector('.status-icon').classList.remove('opacity-0');
                 selectedBtn.querySelector('.status-icon').className = 'ph ph-x-circle text-2xl text-red-500 transition status-icon';
-
-                // Дизайн зворотного зв'язку - помилка
                 feedbackContainer.classList.remove('hidden');
                 feedbackContainer.classList.add('bg-red-100', 'border-red-300', 'dark:bg-red-900/40', 'dark:border-red-800', 'fade-in');
                 feedbackIcon.className = 'ph-fill ph-warning-circle text-2xl mt-1 text-red-600 dark:text-red-400';
-                feedbackTitle.className = 'font-bold text-lg text-red-800 dark:text-red-300';
-                feedbackTitle.innerText = "На жаль, це помилка.";
+                feedbackTitle.innerText = "Помилка.";
                 feedbackText.innerText = explanation;
             }
-
-            // Показуємо кнопку "Далі"
             document.getElementById('nextBtn').classList.remove('hidden');
         }
 
@@ -710,31 +678,30 @@
 
         function showResult() {
             document.getElementById('quizScreen').classList.add('hidden');
-            const resultScreen = document.getElementById('resultScreen');
-            resultScreen.classList.remove('hidden');
+            document.getElementById('resultScreen').classList.remove('hidden');
             
+            // Виведення класу та балів
+            document.getElementById('finalGradeText').innerText = currentGrade;
             document.getElementById('finalScore').innerText = score;
             
             const messageEl = document.getElementById('resultMessage');
             const iconEl = document.getElementById('resultIcon');
             
-            // Логіка оцінювання
             if (score === 12) {
-                messageEl.innerText = "Блискучий результат! Ти справжній майстер технологій!";
+                messageEl.innerText = "Фантастичний результат! Ти бездоганно знаєш програму цього класу.";
                 iconEl.innerHTML = '<i class="ph-fill ph-trophy text-7xl text-yellow-500"></i>';
             } else if (score >= 9) {
-                messageEl.innerText = "Чудова робота! Ти дуже добре засвоїв матеріал.";
+                messageEl.innerText = "Чудовий рівень знань! Ти молодець.";
                 iconEl.innerHTML = '<i class="ph-fill ph-medal text-7xl text-indigo-500"></i>';
             } else if (score >= 6) {
-                messageEl.innerText = "Непогано, але є куди рости. Повтори пройдений матеріал.";
+                messageEl.innerText = "Достатній рівень. Варто ще раз переглянути деякі теми підручника.";
                 iconEl.innerHTML = '<i class="ph-fill ph-thumbs-up text-7xl text-green-500"></i>';
             } else {
-                messageEl.innerText = "Тобі варто більше уваги приділити цьому предмету. Спробуй ще раз!";
+                messageEl.innerText = "Спробуй ще раз, попередньо ознайомившись із матеріалами підручника.";
                 iconEl.innerHTML = '<i class="ph-fill ph-books text-7xl text-red-500"></i>';
             }
         }
 
-        // Запуск
         initTheme();
     </script>
 </body>
