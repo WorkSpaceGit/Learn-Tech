@@ -27,17 +27,18 @@
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        .option-btn { transition: all 0.2s ease; }
+        .option-btn { transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); }
         .option-btn:disabled { cursor: default; }
+        .no-select { user-select: none; -webkit-user-select: none; }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-900 dark:bg-darkBg dark:text-gray-100 min-h-screen flex flex-col font-sans transition-colors duration-300">
+<body class="bg-gray-50 text-gray-900 dark:bg-darkBg dark:text-gray-100 min-h-screen flex flex-col font-sans transition-colors duration-300 no-select">
 
     <!-- Навігація -->
     <nav class="bg-white dark:bg-darkCard shadow-md sticky top-0 z-50">
         <div class="max-w-6xl mx-auto px-4">
             <div class="flex justify-between items-center py-4">
-                <div class="flex items-center gap-2 text-xl font-bold text-indigo-600 dark:text-indigo-400 cursor-pointer" onclick="showWelcomeScreen()">
+                <div class="flex items-center gap-2 text-xl font-bold text-indigo-600 dark:text-indigo-400 cursor-pointer" onclick="confirmExit()">
                     <i class="ph ph-exam text-3xl"></i>
                     <span>ТехноСвіт Тести</span>
                 </div>
@@ -77,16 +78,16 @@
     <main class="flex-grow flex items-center justify-center p-4">
         
         <!-- Екран привітання -->
-        <div id="welcomeScreen" class="max-w-2xl w-full bg-white dark:bg-darkCard rounded-2xl shadow-xl p-8 text-center fade-in">
-            <i class="ph ph-student text-6xl text-indigo-500 mb-4"></i>
-            <h1 class="text-3xl font-bold mb-4">Підсумкове оцінювання з Технологій</h1>
-            <p class="text-gray-600 dark:text-gray-400 mb-8 text-lg">Обери свій клас у меню вище, щоб розпочати тестування. Тест складається з 12 питань.</p>
-            <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 md:hidden">
-                <button onclick="startTest(5)" class="bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 py-3 rounded-xl font-bold hover:bg-indigo-200 dark:hover:bg-indigo-800/50 transition">5 Клас</button>
-                <button onclick="startTest(6)" class="bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 py-3 rounded-xl font-bold hover:bg-indigo-200 dark:hover:bg-indigo-800/50 transition">6 Клас</button>
-                <button onclick="startTest(7)" class="bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 py-3 rounded-xl font-bold hover:bg-indigo-200 dark:hover:bg-indigo-800/50 transition">7 Клас</button>
-                <button onclick="startTest(8)" class="bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 py-3 rounded-xl font-bold hover:bg-indigo-200 dark:hover:bg-indigo-800/50 transition">8 Клас</button>
-                <button onclick="startTest(9)" class="bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 py-3 rounded-xl font-bold hover:bg-indigo-200 dark:hover:bg-indigo-800/50 transition">9 Клас</button>
+        <div id="welcomeScreen" class="max-w-2xl w-full bg-white dark:bg-darkCard rounded-2xl shadow-xl p-8 text-center fade-in border-b-4 border-indigo-500">
+            <i class="ph ph-student text-7xl text-indigo-500 mb-4 animate-bounce"></i>
+            <h1 class="text-3xl font-bold mb-4">Вітаємо у системі тестування!</h1>
+            <p class="text-gray-600 dark:text-gray-400 mb-8 text-lg">Будь ласка, оберіть свій клас для початку підсумкової перевірки знань з Технологій.</p>
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                <button onclick="startTest(5)" class="bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 py-4 rounded-xl font-black hover:bg-indigo-200 dark:hover:bg-indigo-800 transition transform hover:scale-105 active:scale-95">5 КЛАС</button>
+                <button onclick="startTest(6)" class="bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 py-4 rounded-xl font-black hover:bg-indigo-200 dark:hover:bg-indigo-800 transition transform hover:scale-105 active:scale-95">6 КЛАС</button>
+                <button onclick="startTest(7)" class="bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 py-4 rounded-xl font-black hover:bg-indigo-200 dark:hover:bg-indigo-800 transition transform hover:scale-105 active:scale-95">7 КЛАС</button>
+                <button onclick="startTest(8)" class="bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 py-4 rounded-xl font-black hover:bg-indigo-200 dark:hover:bg-indigo-800 transition transform hover:scale-105 active:scale-95">8 КЛАС</button>
+                <button onclick="startTest(9)" class="bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 py-4 rounded-xl font-black hover:bg-indigo-200 dark:hover:bg-indigo-800 transition transform hover:scale-105 active:scale-95">9 КЛАС</button>
             </div>
         </div>
 
@@ -94,68 +95,87 @@
         <div id="quizScreen" class="max-w-3xl w-full hidden">
             <div class="mb-6 flex justify-between items-end">
                 <div>
-                    <span id="gradeBadge" class="bg-indigo-500 text-white text-sm font-bold px-3 py-1 rounded-full mb-2 inline-block"></span>
-                    <h2 class="text-2xl font-bold">Питання <span id="currentQuestionNum">1</span> з 12</h2>
+                    <span id="gradeBadge" class="bg-indigo-600 text-white text-xs font-black px-4 py-1.5 rounded-full mb-3 uppercase tracking-widest inline-block shadow-sm"></span>
+                    <h2 class="text-2xl font-bold">Запитання <span id="currentQuestionNum" class="text-indigo-500">1</span>/12</h2>
                 </div>
-                <div class="text-gray-500 dark:text-gray-400 font-medium text-lg">
-                    Рахунок: <span id="currentScore" class="text-indigo-600 dark:text-indigo-400 font-bold">0</span>
+                <div class="bg-white dark:bg-darkCard px-4 py-2 rounded-xl shadow-sm border border-gray-100 dark:border-gray-800">
+                    <span class="text-gray-400 text-sm font-bold uppercase tracking-tighter mr-2">Рахунок:</span>
+                    <span id="currentScore" class="text-indigo-600 dark:text-indigo-400 text-xl font-black">0</span>
                 </div>
             </div>
 
-            <div class="bg-white dark:bg-darkCard rounded-2xl shadow-xl p-6 sm:p-8 fade-in">
-                <p id="questionText" class="text-xl sm:text-2xl font-semibold mb-6"></p>
-                <div id="optionsContainer" class="space-y-3"></div>
-                <div id="feedbackContainer" class="mt-6 hidden p-4 rounded-xl border">
-                    <div class="flex items-start gap-3">
-                        <i id="feedbackIcon" class="text-2xl mt-1"></i>
+            <div class="bg-white dark:bg-darkCard rounded-3xl shadow-2xl p-6 sm:p-10 fade-in relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-full h-1 bg-gray-100 dark:bg-gray-800">
+                    <div id="progressBar" class="h-full bg-indigo-500 transition-all duration-500" style="width: 0%"></div>
+                </div>
+
+                <p id="questionText" class="text-xl sm:text-2xl font-bold mb-8 leading-tight"></p>
+                <div id="optionsContainer" class="space-y-4"></div>
+                
+                <div id="feedbackContainer" class="mt-8 hidden p-5 rounded-2xl border-2">
+                    <div class="flex items-start gap-4">
+                        <div id="feedbackIconCircle" class="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0">
+                            <i id="feedbackIcon" class="text-2xl"></i>
+                        </div>
                         <div>
-                            <h3 id="feedbackTitle" class="font-bold text-lg"></h3>
-                            <p id="feedbackText" class="mt-1 text-gray-700 dark:text-gray-300"></p>
+                            <h3 id="feedbackTitle" class="font-black text-lg uppercase tracking-tight"></h3>
+                            <p id="feedbackText" class="mt-1 text-gray-700 dark:text-gray-300 leading-relaxed"></p>
                         </div>
                     </div>
                 </div>
-                <div class="mt-8 flex justify-end">
-                    <button id="nextBtn" onclick="nextQuestion()" class="hidden bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-8 rounded-xl transition shadow-lg flex items-center gap-2">
-                        Наступне питання <i class="ph ph-arrow-right"></i>
+
+                <div class="mt-10 flex justify-end">
+                    <button id="nextBtn" onclick="nextQuestion()" class="hidden bg-indigo-600 hover:bg-indigo-700 text-white font-black py-4 px-10 rounded-2xl transition shadow-xl transform hover:-translate-y-1 active:translate-y-0 flex items-center gap-3">
+                        ДАЛІ <i class="ph-bold ph-arrow-right"></i>
                     </button>
                 </div>
             </div>
         </div>
 
         <!-- Екран результатів -->
-        <div id="resultScreen" class="max-w-2xl w-full hidden bg-white dark:bg-darkCard rounded-2xl shadow-xl p-8 text-center fade-in border-t-8 border-indigo-600">
-            <div id="resultIcon" class="mb-4"></div>
-            <h2 class="text-3xl font-bold mb-2">Тестування завершено!</h2>
+        <div id="resultScreen" class="max-w-2xl w-full hidden bg-white dark:bg-darkCard rounded-3xl shadow-2xl p-8 sm:p-12 text-center fade-in border-t-[12px] border-indigo-600">
+            <div id="resultIcon" class="mb-6"></div>
+            <h2 class="text-4xl font-black mb-2 text-gray-900 dark:text-white uppercase">ТЕСТ ЗАВЕРШЕНО</h2>
             
-            <!-- Додано інформацію про клас та бал -->
-            <div class="bg-gray-50 dark:bg-gray-800/50 rounded-2xl p-6 my-6 border border-gray-100 dark:border-gray-700">
-                <p class="text-gray-500 dark:text-gray-400 uppercase tracking-widest text-sm font-bold mb-2">Ваш результат за</p>
-                <div class="text-2xl font-black text-indigo-600 dark:text-indigo-400 mb-4">
-                    <span id="finalGradeText"></span> КЛАС
-                </div>
-                <div class="flex items-center justify-center gap-2">
-                    <span class="text-gray-400 text-lg uppercase font-bold">Бал:</span>
-                    <span id="finalScore" class="font-black text-6xl text-gray-900 dark:text-white"></span>
-                    <span class="text-gray-400 text-3xl font-light">/ 12</span>
+            <!-- Посилений блок інформації для вчителя -->
+            <div class="bg-gray-50 dark:bg-gray-800/40 rounded-3xl p-8 my-8 border-2 border-dashed border-gray-200 dark:border-gray-700 relative">
+                <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-white dark:bg-darkCard px-4 py-1 border-2 border-gray-200 dark:border-gray-700 rounded-full text-xs font-black text-gray-400 uppercase">Офіційний протокол</div>
+                
+                <p class="text-gray-500 dark:text-gray-400 uppercase tracking-[0.2em] text-xs font-black mb-3">Результати тестування</p>
+                
+                <div class="flex flex-col items-center">
+                    <div class="text-3xl font-black text-indigo-600 dark:text-indigo-400 mb-1">
+                        <span id="finalGradeText"></span> КЛАС
+                    </div>
+                    
+                    <div class="flex items-baseline justify-center gap-1 mb-4">
+                        <span id="finalScore" class="font-black text-8xl text-gray-900 dark:text-white">0</span>
+                        <span class="text-gray-400 text-4xl font-light">/12</span>
+                    </div>
+
+                    <div id="testTimestamp" class="text-sm font-medium text-gray-400 dark:text-gray-500 bg-gray-100 dark:bg-gray-800 px-4 py-2 rounded-lg flex items-center gap-2">
+                        <i class="ph ph-calendar-check"></i>
+                        <span id="completionTime"></span>
+                    </div>
                 </div>
             </div>
 
-            <p id="resultMessage" class="text-lg text-gray-600 dark:text-gray-400 mb-8 font-medium italic"></p>
+            <p id="resultMessage" class="text-xl text-gray-600 dark:text-gray-300 mb-10 font-medium"></p>
             
-            <div class="flex flex-col sm:flex-row justify-center gap-4">
-                <button onclick="startTest(currentGrade)" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-8 rounded-xl transition shadow-lg">
-                    Пройти ще раз
+            <div class="grid sm:grid-cols-2 gap-4">
+                <button onclick="startTest(currentGrade)" class="bg-indigo-600 hover:bg-indigo-700 text-white font-black py-4 px-8 rounded-2xl transition shadow-lg transform hover:scale-[1.02]">
+                    ПРОЙТИ ПОВТОРНО
                 </button>
-                <button onclick="showWelcomeScreen()" class="bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white font-bold py-3 px-8 rounded-xl hover:bg-gray-300 dark:hover:bg-gray-600 transition">
-                    Змінити клас
+                <button onclick="showWelcomeScreen()" class="bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-white font-black py-4 px-8 rounded-2xl hover:bg-gray-200 dark:hover:bg-gray-700 transition">
+                    ВИБРАТИ ІНШИЙ КЛАС
                 </button>
             </div>
         </div>
 
     </main>
 
-    <footer class="text-center py-4 text-sm text-gray-500 dark:text-gray-500 border-t border-gray-200 dark:border-gray-800 mt-auto">
-        &copy; 2026 | Розроблено для уроків Технологій
+    <footer class="text-center py-6 text-xs text-gray-400 dark:text-gray-600 border-t border-gray-100 dark:border-gray-900 mt-auto bg-white/50 dark:bg-transparent">
+        ТЕХНОСВІТ &copy; 2026 | Система підсумкової атестації 5-9 класи
     </footer>
 
     <script>
@@ -538,6 +558,7 @@
         let currentQIndex = 0;
         let score = 0;
         let isAnswered = false;
+        let testInProgress = false;
 
         function initTheme() {
             if (localStorage.theme === 'light') {
@@ -557,10 +578,22 @@
             document.getElementById('mobileMenu').classList.toggle('hidden');
         }
 
+        function confirmExit() {
+            if (testInProgress) {
+                if (confirm("Тест триває. Ви впевнені, що хочете вийти на головну? Прогрес буде втрачено.")) {
+                    testInProgress = false;
+                    showWelcomeScreen();
+                }
+            } else {
+                showWelcomeScreen();
+            }
+        }
+
         function showWelcomeScreen() {
             document.getElementById('welcomeScreen').classList.remove('hidden');
             document.getElementById('quizScreen').classList.add('hidden');
             document.getElementById('resultScreen').classList.add('hidden');
+            testInProgress = false;
         }
 
         function shuffleArray(array) {
@@ -577,6 +610,7 @@
             score = 0;
             currentQIndex = 0;
             currentQuestions = shuffleArray(db[grade]);
+            testInProgress = true;
 
             document.getElementById('gradeBadge').innerText = grade + ' Клас';
             document.getElementById('welcomeScreen').classList.add('hidden');
@@ -594,10 +628,13 @@
             document.getElementById('currentScore').innerText = score;
             document.getElementById('questionText').innerText = q.q;
             
+            // Прогрес-бар
+            const progress = (currentQIndex / 12) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+
             document.getElementById('nextBtn').classList.add('hidden');
             const feedbackContainer = document.getElementById('feedbackContainer');
             feedbackContainer.classList.add('hidden');
-            feedbackContainer.className = 'mt-6 hidden p-4 rounded-xl border';
 
             let options = [
                 { text: q.a, isCorrect: q.a === q.correct },
@@ -614,13 +651,13 @@
 
             options.forEach((opt, index) => {
                 const btn = document.createElement('button');
-                btn.className = 'w-full text-left p-4 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-indigo-50 dark:hover:bg-indigo-900/30 font-medium option-btn flex gap-3 items-center group bg-white dark:bg-darkCard transition-all';
+                btn.className = 'w-full text-left p-4 rounded-xl border-2 border-gray-100 dark:border-gray-800 hover:border-indigo-500 dark:hover:border-indigo-500 font-medium option-btn flex gap-4 items-center group bg-white dark:bg-darkCard transition-all shadow-sm';
                 btn.innerHTML = `
-                    <span class="flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-lg bg-gray-100 dark:bg-gray-800 text-indigo-600 dark:text-indigo-400 font-bold group-hover:bg-indigo-200 dark:group-hover:bg-indigo-800 transition">
+                    <span class="flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-xl bg-gray-50 dark:bg-gray-800 text-indigo-600 dark:text-indigo-400 font-black group-hover:bg-indigo-600 group-hover:text-white transition-colors">
                         ${letters[index]}
                     </span>
-                    <span class="flex-grow">${opt.text}</span>
-                    <i class="ph ph-check-circle text-2xl text-green-500 opacity-0 transition status-icon"></i>
+                    <span class="flex-grow text-lg">${opt.text}</span>
+                    <i class="ph ph-circle text-2xl text-gray-200 dark:text-gray-700 status-icon"></i>
                 `;
                 btn.onclick = () => handleAnswer(btn, opt.isCorrect, q.explanation, q.correct);
                 optionsContainer.appendChild(btn);
@@ -635,34 +672,39 @@
             
             for (let btn of allBtns) {
                 btn.disabled = true;
-                btn.classList.remove('hover:bg-indigo-50', 'dark:hover:bg-indigo-900/30', 'cursor-pointer');
+                btn.classList.remove('hover:border-indigo-500', 'dark:hover:border-indigo-500');
                 if (btn.innerText.includes(correctText)) {
-                    btn.classList.add('border-green-500', 'dark:border-green-500', 'bg-green-50', 'dark:bg-green-900/20');
-                    btn.querySelector('.status-icon').className = 'ph ph-check-circle text-2xl text-green-500 transition status-icon';
+                    btn.classList.add('border-green-500', 'dark:border-green-500', 'bg-green-50', 'dark:bg-green-900/10');
+                    btn.querySelector('.status-icon').className = 'ph-fill ph-check-circle text-2xl text-green-500 status-icon';
                 }
             }
 
             const feedbackContainer = document.getElementById('feedbackContainer');
+            const feedbackIconCircle = document.getElementById('feedbackIconCircle');
             const feedbackIcon = document.getElementById('feedbackIcon');
             const feedbackTitle = document.getElementById('feedbackTitle');
             const feedbackText = document.getElementById('feedbackText');
 
+            feedbackContainer.classList.remove('hidden', 'bg-green-100', 'bg-red-100', 'border-green-400', 'border-red-400', 'dark:bg-green-900/20', 'dark:bg-red-900/20');
+
             if (isCorrect) {
                 score++;
                 document.getElementById('currentScore').innerText = score;
-                feedbackContainer.classList.remove('hidden');
-                feedbackContainer.classList.add('bg-green-100', 'border-green-300', 'dark:bg-green-900/40', 'dark:border-green-800', 'fade-in');
-                feedbackIcon.className = 'ph-fill ph-check-circle text-2xl mt-1 text-green-600 dark:text-green-400';
-                feedbackTitle.innerText = "Правильно!";
+                feedbackContainer.classList.add('bg-green-50', 'border-green-200', 'dark:bg-green-900/20', 'dark:border-green-800', 'fade-in');
+                feedbackIconCircle.className = 'w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0 bg-green-500 text-white';
+                feedbackIcon.className = 'ph-bold ph-check';
+                feedbackTitle.innerText = "Відмінно!";
+                feedbackTitle.className = "font-black text-lg uppercase tracking-tight text-green-600 dark:text-green-400";
                 feedbackText.innerText = explanation;
             } else {
-                selectedBtn.classList.add('border-red-500', 'dark:border-red-500', 'bg-red-50', 'dark:bg-red-900/20');
-                selectedBtn.querySelector('.status-icon').className = 'ph ph-x-circle text-2xl text-red-500 transition status-icon';
-                feedbackContainer.classList.remove('hidden');
-                feedbackContainer.classList.add('bg-red-100', 'border-red-300', 'dark:bg-red-900/40', 'dark:border-red-800', 'fade-in');
-                feedbackIcon.className = 'ph-fill ph-warning-circle text-2xl mt-1 text-red-600 dark:text-red-400';
-                feedbackTitle.innerText = "Помилка.";
-                feedbackText.innerText = explanation;
+                selectedBtn.classList.add('border-red-500', 'dark:border-red-500', 'bg-red-50', 'dark:bg-red-900/10');
+                selectedBtn.querySelector('.status-icon').className = 'ph-fill ph-x-circle text-2xl text-red-500 status-icon';
+                feedbackContainer.classList.add('bg-red-50', 'border-red-200', 'dark:bg-red-900/20', 'dark:border-red-800', 'fade-in');
+                feedbackIconCircle.className = 'w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0 bg-red-500 text-white';
+                feedbackIcon.className = 'ph-bold ph-warning';
+                feedbackTitle.innerText = "Майже!";
+                feedbackTitle.className = "font-black text-lg uppercase tracking-tight text-red-600 dark:text-red-400";
+                feedbackText.innerText = "Правильна відповідь: " + correctText + ". " + explanation;
             }
             document.getElementById('nextBtn').classList.remove('hidden');
         }
@@ -676,31 +718,54 @@
             }
         }
 
+        function getTimestamp() {
+            const now = new Date();
+            const days = ['неділя', 'понеділок', 'вівторок', 'середа', 'четвер', 'п’ятниця', 'субота'];
+            const dayName = days[now.getDay()];
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            return `${dayName}, ${hours}:${minutes}`;
+        }
+
         function showResult() {
+            testInProgress = false;
             document.getElementById('quizScreen').classList.add('hidden');
             document.getElementById('resultScreen').classList.remove('hidden');
             
-            // Виведення класу та балів
             document.getElementById('finalGradeText').innerText = currentGrade;
             document.getElementById('finalScore').innerText = score;
+            document.getElementById('completionTime').innerText = getTimestamp();
             
             const messageEl = document.getElementById('resultMessage');
             const iconEl = document.getElementById('resultIcon');
             
             if (score === 12) {
-                messageEl.innerText = "Фантастичний результат! Ти бездоганно знаєш програму цього класу.";
-                iconEl.innerHTML = '<i class="ph-fill ph-trophy text-7xl text-yellow-500"></i>';
-            } else if (score >= 9) {
-                messageEl.innerText = "Чудовий рівень знань! Ти молодець.";
-                iconEl.innerHTML = '<i class="ph-fill ph-medal text-7xl text-indigo-500"></i>';
-            } else if (score >= 6) {
-                messageEl.innerText = "Достатній рівень. Варто ще раз переглянути деякі теми підручника.";
-                iconEl.innerHTML = '<i class="ph-fill ph-thumbs-up text-7xl text-green-500"></i>';
+                messageEl.innerText = "Ти справжній експерт! Твої знання з технологій бездоганні.";
+                iconEl.innerHTML = '<i class="ph-fill ph-crown text-8xl text-yellow-500 animate-pulse"></i>';
+            } else if (score >= 10) {
+                messageEl.innerText = "Чудовий результат! Ти дуже добре орієнтуєшся в матеріалі.";
+                iconEl.innerHTML = '<i class="ph-fill ph-medal text-8xl text-indigo-500"></i>';
+            } else if (score >= 7) {
+                messageEl.innerText = "Добрі знання, але є кілька прогалин. Ти можеш краще!";
+                iconEl.innerHTML = '<i class="ph-fill ph-thumbs-up text-8xl text-green-500"></i>';
+            } else if (score >= 4) {
+                messageEl.innerText = "Твої знання потребують систематизації. Перечитай конспекти.";
+                iconEl.innerHTML = '<i class="ph-fill ph-books text-8xl text-orange-500"></i>';
             } else {
-                messageEl.innerText = "Спробуй ще раз, попередньо ознайомившись із матеріалами підручника.";
-                iconEl.innerHTML = '<i class="ph-fill ph-books text-7xl text-red-500"></i>';
+                messageEl.innerText = "На жаль, результат слабкий. Тобі потрібно приділити більше часу теорії.";
+                iconEl.innerHTML = '<i class="ph-fill ph-warning-diamond text-8xl text-red-500"></i>';
             }
         }
+
+        // Заборона контекстного меню (захист від копіювання)
+        document.addEventListener('contextmenu', event => event.preventDefault());
+        
+        // Попередження при оновленні сторінки
+        window.onbeforeunload = function() {
+            if (testInProgress) {
+                return "Тест не завершено. Ви впевнені, що хочете піти?";
+            }
+        };
 
         initTheme();
     </script>
